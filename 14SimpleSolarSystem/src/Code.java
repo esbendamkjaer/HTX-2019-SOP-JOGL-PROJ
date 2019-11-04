@@ -51,6 +51,7 @@ public class Code extends JFrame implements GLEventListener {
 
 	public void display(GLAutoDrawable drawable) {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
+		
 		gl.glClear(GL4.GL_DEPTH_BUFFER_BIT);
 		gl.glUseProgram(rendering_program);
 		gl.glEnable(GL4.GL_CULL_FACE);

@@ -1,7 +1,11 @@
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -17,6 +21,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import graphicslib3D.GLSLUtils;
 import graphicslib3D.Matrix3D;
+import graphicslib3D.MatrixStack;
 
 public class Code extends JFrame implements GLEventListener {
 	private static final long serialVersionUID = 3746059804968448472L;
@@ -26,8 +31,11 @@ public class Code extends JFrame implements GLEventListener {
 	private int vbo[] = new int[2];
 	private float cameraX, cameraY, cameraZ;
 	private float cubeLocX, cubeLocY, cubeLocZ;
+	private float pyrLocX, pyrLocY, pyrLocZ;
 	private GLSLUtils util = new GLSLUtils();
 	private Matrix3D pMat;
+	
+	private int angle = 0;
 	
 	public Code() {
 		setTitle("Chapter2 - program1");
@@ -42,6 +50,29 @@ public class Code extends JFrame implements GLEventListener {
 		
 		setVisible(true);
 		
+		myCanvas.addMouseMotionListener(new MouseMotionListener() {
+	
+			private int lastX = -1, lastY = -1;
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				
+				if (lastX == -1) lastX = e.getX();
+				if (lastY == -1) lastY = e.getY();
+
+				angle += e.getX() - lastX;
+				System.out.println(angle);
+				lastX = e.getX();
+				lastY = e.getY();
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		FPSAnimator animtr = new FPSAnimator(myCanvas, 50);
 		animtr.start();
 		
@@ -49,33 +80,52 @@ public class Code extends JFrame implements GLEventListener {
 
 	public void display(GLAutoDrawable drawable) {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
+		
 		gl.glClear(GL4.GL_DEPTH_BUFFER_BIT);
 		gl.glUseProgram(rendering_program);
-		
+		gl.glEnable(GL4.GL_CULL_FACE);
+
 		float bkg[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		FloatBuffer bkgBuffer = Buffers.newDirectFloatBuffer(bkg);
 		gl.glClearBufferfv(GL4.GL_COLOR, 0, bkgBuffer);
 		
-		Matrix3D vMat = new Matrix3D();
-		vMat.translate(-cameraX, -cameraY, -cameraZ);
-		
-		Matrix3D mMat = new Matrix3D();
-		
-		double t = (double) (System.currentTimeMillis()) / 10000.0;
-		mMat.translate(Math.sin(2*t)*2.0, Math.sin(3*t)*2.0, Math.sin(4*t)*2.0);
-		mMat.rotate(1000 * t, 1000 * t, 1000 * t);
-		
-		mMat.translate(cubeLocX, cubeLocY, cubeLocZ);
-		
-		Matrix3D mvMat = new Matrix3D();
-		mvMat.concatenate(vMat);
-		mvMat.concatenate(mMat);
-
 		int mv_loc = gl.glGetUniformLocation(rendering_program, "mv_matrix");
 		int proj_loc = gl.glGetUniformLocation(rendering_program, "proj_matrix");
-		
 		gl.glUniformMatrix4fv(proj_loc, 1, false, pMat.getFloatValues(), 0);
-		gl.glUniformMatrix4fv(mv_loc, 1, false, mvMat.getFloatValues(), 0);
+		
+		MatrixStack mvStack = new MatrixStack(20);
+		
+		mvStack.pushMatrix();
+		mvStack.translate(-cameraX, -cameraY, -cameraZ);
+		
+		mvStack.rotate(angle, 0, 1, 0);
+		
+		double amt = (double)(System.currentTimeMillis())/1000.0;
+		
+		mvStack.pushMatrix();
+		mvStack.translate(pyrLocX, pyrLocY, pyrLocZ);
+		mvStack.rotate((System.currentTimeMillis()) / 10.0, 1.0, 0.0, 0.0);
+		
+		gl.glUniformMatrix4fv(mv_loc, 1, false, mvStack.peek().getFloatValues(), 0);		
+		
+		gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[1]);
+		gl.glVertexAttribPointer(0, 3, GL4.GL_FLOAT, false, 0, 0);
+		gl.glEnableVertexAttribArray(0);
+		
+		gl.glEnable(GL4.GL_DEPTH_TEST);
+		gl.glDepthFunc(GL4.GL_LEQUAL);
+		gl.glFrontFace(GL4.GL_CCW);
+		gl.glDrawArrays(GL4.GL_TRIANGLES, 0, 18);
+		
+		mvStack.popMatrix();
+		
+		
+		mvStack.pushMatrix();
+		mvStack.translate(Math.sin(amt)*4.0f, 0.0f, Math.cos(amt)*4.0f);
+		mvStack.pushMatrix();
+		mvStack.rotate((System.currentTimeMillis())/10.0, 0.0, 1.0, 0.0);
+		
+		gl.glUniformMatrix4fv(mv_loc, 1, false, mvStack.peek().getFloatValues(), 0);
 		
 		gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[0]);
 		gl.glVertexAttribPointer(0, 3, GL4.GL_FLOAT, false, 0, 0);
@@ -83,7 +133,31 @@ public class Code extends JFrame implements GLEventListener {
 		
 		gl.glEnable(GL4.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL4.GL_LEQUAL);
+		gl.glFrontFace(GL4.GL_CW);
 		gl.glDrawArrays(GL4.GL_TRIANGLES, 0, 36);
+		
+		mvStack.popMatrix();
+		
+		
+		mvStack.pushMatrix();
+		mvStack.translate(0.0f, Math.sin(amt)*2.0f, Math.cos(amt)*2.0f);
+		mvStack.pushMatrix();
+		mvStack.rotate((System.currentTimeMillis())/10.0, 0.0, 0.0, 1.0);
+		mvStack.scale(0.25, 0.25, 0.25);
+		
+		gl.glUniformMatrix4fv(mv_loc, 1, false, mvStack.peek().getFloatValues(), 0);
+		
+		gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[0]);
+		gl.glVertexAttribPointer(0, 3, GL4.GL_FLOAT, false, 0, 0);
+		gl.glEnableVertexAttribArray(0);
+		
+		gl.glEnable(GL4.GL_DEPTH_TEST);
+		gl.glDepthFunc(GL4.GL_LEQUAL);
+		gl.glFrontFace(GL4.GL_CW);
+		gl.glDrawArrays(GL4.GL_TRIANGLES, 0, 36);
+		
+		mvStack.popMatrix(); mvStack.popMatrix(); mvStack.popMatrix(); mvStack.popMatrix();
+		
 	}
 
 	public static void main(String[] args) {
@@ -94,8 +168,9 @@ public class Code extends JFrame implements GLEventListener {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 		rendering_program = createShaderProgram();
 		setupVertices();
-		cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
+		cameraX = 0.0f; cameraY = 3.0f; cameraZ = 15.0f;
 		cubeLocX = 0.0f; cubeLocY = 0.0f; cubeLocZ = 0.0f;
+		pyrLocX = 0.0f; pyrLocY = 0.0f; pyrLocZ = 0.0f;
 		
 		float aspect = (float) myCanvas.getWidth() / (float) myCanvas.getHeight();
 		pMat = perspective(60.0f, aspect, 0.1f, 1000.0f);
@@ -105,7 +180,7 @@ public class Code extends JFrame implements GLEventListener {
 		
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 		
-		float[ ] vertex_positions = {
+		float[] cube_positions = {
 			-1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f,
 			1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f,
 			1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
@@ -114,13 +189,26 @@ public class Code extends JFrame implements GLEventListener {
 			-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f
 		};
 		
+		float[] pyramid_positions = {
+			-1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+			1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+			-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f,
+			1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f,
+		};
+		
 		gl.glGenVertexArrays(vao.length, vao, 0);
 		gl.glBindVertexArray(vao[0]);
 		gl.glGenBuffers(vbo.length, vbo, 0);
-		gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[0]);
-		FloatBuffer vertBuf = Buffers.newDirectFloatBuffer(vertex_positions);
-		gl.glBufferData(GL4.GL_ARRAY_BUFFER, vertBuf.limit()*4, vertBuf, GL4.GL_STATIC_DRAW);
 		
+		gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[0]);
+		FloatBuffer cubeBuf = Buffers.newDirectFloatBuffer(cube_positions);
+		gl.glBufferData(GL4.GL_ARRAY_BUFFER, cubeBuf.limit()*4, cubeBuf, GL4.GL_STATIC_DRAW);
+		
+		gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[1]);
+		FloatBuffer pyrBuf = Buffers.newDirectFloatBuffer(pyramid_positions);
+		gl.glBufferData(GL4.GL_ARRAY_BUFFER, pyrBuf.limit()*4, pyrBuf, GL4.GL_STATIC_DRAW);
 	}
 	
 	private Matrix3D perspective(float fovy, float aspect, float n, float f) {

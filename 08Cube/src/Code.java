@@ -38,7 +38,7 @@ public class Code extends JFrame implements GLEventListener {
 		myCanvas = new GLCanvas();
 		myCanvas.addGLEventListener(this);
 		this.add(myCanvas);
-		
+
 		setVisible(true);
 	}
 
