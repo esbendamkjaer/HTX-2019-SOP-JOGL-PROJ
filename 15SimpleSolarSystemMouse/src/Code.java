@@ -35,6 +35,7 @@ public class Code extends JFrame implements GLEventListener {
 	private GLSLUtils util = new GLSLUtils();
 	private Matrix3D pMat;
 	
+	private int angleY = 0;
 	private int angle = 0;
 	
 	public Code() {
@@ -60,7 +61,9 @@ public class Code extends JFrame implements GLEventListener {
 				if (lastX == -1) lastX = e.getX();
 				if (lastY == -1) lastY = e.getY();
 
-				angle += e.getX() - lastX;
+				angleY += e.getX() - lastX;
+				angle += e.getY() - lastY;
+				System.out.println(angleY);
 				System.out.println(angle);
 				lastX = e.getX();
 				lastY = e.getY();
@@ -98,13 +101,15 @@ public class Code extends JFrame implements GLEventListener {
 		mvStack.pushMatrix();
 		mvStack.translate(-cameraX, -cameraY, -cameraZ);
 		
-		mvStack.rotate(angle, 0, 1, 0);
+		mvStack.rotate(angleY, 0, 1, 0);
+		mvStack.rotate(Math.cos(Math.toRadians(angleY))*angle, 1, 0, 0);
+		mvStack.rotate(Math.sin(Math.toRadians(angleY))*angle, 0, 0, 1);
 		
 		double amt = (double)(System.currentTimeMillis())/1000.0;
 		
 		mvStack.pushMatrix();
 		mvStack.translate(pyrLocX, pyrLocY, pyrLocZ);
-		mvStack.rotate((System.currentTimeMillis()) / 10.0, 1.0, 0.0, 0.0);
+		//mvStack.rotate((System.currentTimeMillis()) / 10.0, 1.0, 0.0, 0.0);
 		
 		gl.glUniformMatrix4fv(mv_loc, 1, false, mvStack.peek().getFloatValues(), 0);		
 		

@@ -9,5 +9,5 @@ out vec4 varyingColor;
 
 void main(void) {
 	gl_Position = proj_matrix * mv_matrix * vec4(position, 1.0);
-	varyingColor = proj_matrix * vec4(position * 0.5 + vec3(0.5, 0.5, 0.5), 1.0);
+	varyingColor = vec4(position * 0.5 + vec3(0.5, 0.5, 0.5), 1.0);
 }
