@@ -354,13 +354,6 @@ public class Code extends JFrame implements GLEventListener {
 		return vfprogram;
 	}
 	
-	
-	/*
-	 * 
-	 * This is a test comment for a test commit.
-	 * 
-	 */
-	
 	private String[] readShaderSource(String filename) {
 		
 		Vector<String> lines = new Vector<String>();
