@@ -15,7 +15,6 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
-import graphicslib3D.GLSLUtils;
 import graphicslib3D.Matrix3D;
 import graphicslib3D.Vertex3D;
 
@@ -63,6 +62,7 @@ public class Code extends JFrame implements GLEventListener {
 		
 		Matrix3D mMat = new Matrix3D();
 		mMat.translate(cubeLocX, cubeLocY, cubeLocZ);
+
 		mMat.rotateY(System.currentTimeMillis()/10);
 		
 		Matrix3D mvMat = new Matrix3D();

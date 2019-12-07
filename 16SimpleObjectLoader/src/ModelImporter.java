@@ -15,7 +15,11 @@ public class ModelImporter {
 	private ArrayList<Float> normals = new ArrayList<Float>();
 
 	public void parseOBJ(String filename) throws IOException {
+<<<<<<< ours
 		BufferedReader br = new BufferedReader(new InputStreamReader(ModelImporter.class.getResourceAsStream(filename)));
+=======
+		BufferedReader br = new BufferedReader(new InputStreamReader(ModelImporter.class.getResourceAsStream("Pyramid.obj")));
+>>>>>>> theirs
 		
 		String line;
 		while ((line = br.readLine()) != null) {
