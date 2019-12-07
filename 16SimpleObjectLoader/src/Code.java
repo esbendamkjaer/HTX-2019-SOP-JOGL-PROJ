@@ -30,7 +30,7 @@ public class Code extends JFrame implements GLEventListener {
 	private float pyrLocX, pyrLocY, pyrLocZ;
 	private Matrix3D pMat;
 	
-	private ImportedModel myObj = new ImportedModel("/Pyramid.obj");
+	private ImportedModel myObj = new ImportedModel("/Tank.obj");
 	
 	public Code() {
 		setTitle("Chapter2 - program1");
@@ -63,7 +63,7 @@ public class Code extends JFrame implements GLEventListener {
 		
 		Matrix3D mMat = new Matrix3D();
 		mMat.translate(cubeLocX, cubeLocY, cubeLocZ);
-		mMat.rotateX(System.currentTimeMillis()/10);
+		mMat.rotateY(System.currentTimeMillis()/10);
 		
 		Matrix3D mvMat = new Matrix3D();
 		mvMat.concatenate(vMat);
