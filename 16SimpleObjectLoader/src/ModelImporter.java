@@ -15,9 +15,7 @@ public class ModelImporter {
 	private ArrayList<Float> normals = new ArrayList<Float>();
 
 	public void parseOBJ(String filename) throws IOException {
-		
-		InputStream input = ModelImporter.class.getResourceAsStream(filename);
-		BufferedReader br = new BufferedReader(new InputStreamReader(input));
+		BufferedReader br = new BufferedReader(new InputStreamReader(ModelImporter.class.getResourceAsStream("Pyramid.obj")));
 		
 		String line;
 		while ((line = br.readLine()) != null) {
@@ -52,21 +50,14 @@ public class ModelImporter {
 					
 					triangleVerts.add(vertVals.get(vertRef));
 					triangleVerts.add(vertVals.get(vertRef+1));
-					triangleVerts.add(vertVals.get(vertRef)+2);
-					
-					textureCoords.add(stVals.get(tcRef));
-					textureCoords.add(stVals.get(tcRef+1));
-					
-					normals.add(normVals.get(normRef));
-					normals.add(normals.get(normRef)+1);
-					normals.add(normals.get(normRef)+2);
+					triangleVerts.add(vertVals.get(vertRef+2));
 					
 				}
 				
 			}
 			
 		}
-		input.close();
+		br.close();
 		
 	}
 	
@@ -84,22 +75,6 @@ public class ModelImporter {
 		}
 		return p;
 		
-	}
-	
-	public float[] getTextureCoordinates() {
-		float[] p = new float[textureCoords.size()];
-		for (int i = 0; i < textureCoords.size(); i++) {
-			p[i] = textureCoords.get(i);
-		}
-		return p;
-	}
-	
-	public float[] getNormals() {
-		float[] p = new float[normals.size()];
-		for (int i = 0; i < normals.size(); i++) {
-			p[i] = normals.get(i);
-		}
-		return p;
 	}
 	
 }
