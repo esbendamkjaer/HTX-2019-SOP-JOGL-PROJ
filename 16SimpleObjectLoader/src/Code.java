@@ -23,7 +23,7 @@ public class Code extends JFrame implements GLEventListener {
 	private GLCanvas myCanvas;
 	private int rendering_program;
 	private int vao[] = new int[1];
-	private int vbo[] = new int[2];
+	private int vbo[] = new int[1];
 	private float cameraX, cameraY, cameraZ;
 	private float cubeLocX, cubeLocY, cubeLocZ;
 	private float pyrLocX, pyrLocY, pyrLocZ;
@@ -32,7 +32,7 @@ public class Code extends JFrame implements GLEventListener {
 	private ImportedModel myObj = new ImportedModel("/Tank.obj");
 	
 	public Code() {
-		setTitle("Chapter2 - program1");
+		setTitle("Model loader");
 		setSize(600, 600);
 		
 		setLocationRelativeTo(null);
@@ -62,7 +62,6 @@ public class Code extends JFrame implements GLEventListener {
 		
 		Matrix3D mMat = new Matrix3D();
 		mMat.translate(cubeLocX, cubeLocY, cubeLocZ);
-
 		mMat.rotateY(System.currentTimeMillis()/10);
 		
 		Matrix3D mvMat = new Matrix3D();
@@ -84,8 +83,6 @@ public class Code extends JFrame implements GLEventListener {
 		
 		int numVerts = myObj.getNumVertices();
 		gl.glDrawArrays(GL4.GL_TRIANGLES, 0, numVerts);
-		
-		//gl.glDrawArrays(GL4.GL_TRIANGLES, 0, 24);
 	}
 
 	public static void main(String[] args) {
@@ -116,7 +113,6 @@ public class Code extends JFrame implements GLEventListener {
 			pvalues[i*3+1] = (float) (vertices[i]).getY();
 			pvalues[i*3+2] = (float) (vertices[i]).getZ();
 			
-			System.out.println("X: " + pvalues[i*3] + "Y: " + pvalues[i*3+1] + "Z: " + pvalues[i*3+2]);
 		}
 		
 		gl.glGenVertexArrays(vao.length, vao, 0);
@@ -127,9 +123,6 @@ public class Code extends JFrame implements GLEventListener {
 		FloatBuffer cubeBuf = Buffers.newDirectFloatBuffer(pvalues);
 		gl.glBufferData(GL4.GL_ARRAY_BUFFER, cubeBuf.limit()*4, cubeBuf, GL4.GL_STATIC_DRAW);
 		
-		/*gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[1]);
-		FloatBuffer pyrBuf = Buffers.newDirectFloatBuffer(pyramid_positions);
-		gl.glBufferData(GL4.GL_ARRAY_BUFFER, pyrBuf.limit()*4, pyrBuf, GL4.GL_STATIC_DRAW);*/
 	}
 	
 	private Matrix3D perspective(float fovy, float aspect, float n, float f) {
