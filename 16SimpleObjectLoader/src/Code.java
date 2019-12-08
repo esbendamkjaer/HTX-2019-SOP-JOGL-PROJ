@@ -25,11 +25,10 @@ public class Code extends JFrame implements GLEventListener {
 	private int vao[] = new int[1];
 	private int vbo[] = new int[1];
 	private float cameraX, cameraY, cameraZ;
-	private float cubeLocX, cubeLocY, cubeLocZ;
-	private float pyrLocX, pyrLocY, pyrLocZ;
+	private float locX, locY, locZ;
 	private Matrix3D pMat;
 	
-	private ImportedModel myObj = new ImportedModel("/Tank.obj");
+	private ImportedModel myObj = new ImportedModel("/Plane.obj");
 	
 	public Code() {
 		setTitle("Model loader");
@@ -61,7 +60,7 @@ public class Code extends JFrame implements GLEventListener {
 		vMat.translate(-cameraX, -cameraY, -cameraZ);
 		
 		Matrix3D mMat = new Matrix3D();
-		mMat.translate(cubeLocX, cubeLocY, cubeLocZ);
+		mMat.translate(locX, locY, locZ);
 		mMat.rotateY(System.currentTimeMillis()/10);
 		
 		Matrix3D mvMat = new Matrix3D();
@@ -94,7 +93,7 @@ public class Code extends JFrame implements GLEventListener {
 		rendering_program = createShaderProgram();
 		setupVertices();
 		cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
-		cubeLocX = 0.0f; cubeLocY = 0.0f; cubeLocZ = -2.0f;
+		locX = 0.0f; locY = 0.0f; locZ = 4.0f;
 		
 		float aspect = (float) myCanvas.getWidth() / (float) myCanvas.getHeight();
 		pMat = perspective(60.0f, aspect, 0.1f, 1000.0f);
