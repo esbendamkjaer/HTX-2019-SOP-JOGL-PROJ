@@ -32,7 +32,7 @@ public class Code extends JFrame implements GLEventListener {
 	
 	public Code() {
 		setTitle("Model loader");
-		setSize(600, 600);
+		setSize(1200, 1200);
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,6 +81,7 @@ public class Code extends JFrame implements GLEventListener {
 		gl.glDepthFunc(GL4.GL_LEQUAL);
 		
 		int numVerts = myObj.getNumVertices();
+		
 		gl.glDrawArrays(GL4.GL_TRIANGLES, 0, numVerts);
 	}
 
@@ -93,7 +94,7 @@ public class Code extends JFrame implements GLEventListener {
 		rendering_program = createShaderProgram();
 		setupVertices();
 		cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
-		locX = 0.0f; locY = 0.0f; locZ = 4.0f;
+		locX = 0.0f; locY = 0.0f; locZ = 6.0f;
 		
 		float aspect = (float) myCanvas.getWidth() / (float) myCanvas.getHeight();
 		pMat = perspective(60.0f, aspect, 0.1f, 1000.0f);
