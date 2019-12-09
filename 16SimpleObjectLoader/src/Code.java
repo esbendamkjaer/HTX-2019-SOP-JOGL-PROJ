@@ -1,6 +1,9 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -43,7 +46,7 @@ public class Code extends JFrame implements GLEventListener {
 		
 		setVisible(true);
 		
-		FPSAnimator animtr = new FPSAnimator(myCanvas, 50);
+		FPSAnimator animtr = new FPSAnimator(myCanvas, 144);
 		animtr.start();
 	}
 
@@ -51,7 +54,8 @@ public class Code extends JFrame implements GLEventListener {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 		gl.glClear(GL4.GL_DEPTH_BUFFER_BIT);
 		gl.glUseProgram(rendering_program);
-		
+		pMat = perspective(60.0f, 1, 0.1f, 1000.0f);
+
 		float bkg[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		FloatBuffer bkgBuffer = Buffers.newDirectFloatBuffer(bkg);
 		gl.glClearBufferfv(GL4.GL_COLOR, 0, bkgBuffer);
@@ -143,9 +147,11 @@ public class Code extends JFrame implements GLEventListener {
 	}
 	
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		
 	}
 
 	public void dispose(GLAutoDrawable drawable) {
+		
 	}
 
 	private void printShaderLog(int shader) {
@@ -265,26 +271,26 @@ public class Code extends JFrame implements GLEventListener {
 	
 	private String[] readShaderSource(String filename) {
 		
-		Vector<String> lines = new Vector<String>();
+		ArrayList<String> lines = new ArrayList<String>();
 		
-		Scanner sc;
 		try {
-			sc = new Scanner(new File(filename));
+			BufferedReader br = new BufferedReader(new InputStreamReader(Code.class.getResourceAsStream(filename)));
+			
+			String line;
+			while ((line = br.readLine()) != null) {
+				lines.add(line);
+			}
+			
+			br.close();
+			
 		} catch (IOException e) {
-			System.err.println("IOException reading file: " + e);
-			return null;
-		}
-		
-		while (sc.hasNext()) {
-			lines.addElement(sc.nextLine());
-		}
-		
-		sc.close();
+			e.printStackTrace();
+		}		
 		
 		String[] program = new String[lines.size()];
 		
 		for(int i = 0; i < lines.size(); i++) {
-			program[i] = (String) lines.elementAt(i) + "\n";
+			program[i] = (String) lines.get(i) + "\n";
 		}
 		
 		return program;
