@@ -54,7 +54,6 @@ public class Code extends JFrame implements GLEventListener {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 		gl.glClear(GL4.GL_DEPTH_BUFFER_BIT);
 		gl.glUseProgram(rendering_program);
-		pMat = perspective(60.0f, 1, 0.1f, 1000.0f);
 
 		float bkg[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		FloatBuffer bkgBuffer = Buffers.newDirectFloatBuffer(bkg);
