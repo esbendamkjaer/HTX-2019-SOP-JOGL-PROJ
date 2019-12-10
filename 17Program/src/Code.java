@@ -52,6 +52,8 @@ public class Code extends JFrame implements GLEventListener {
 		gl.glClear(GL4.GL_DEPTH_BUFFER_BIT);
 		gl.glUseProgram(rendering_program);
 
+		gl.glPolygonMode(GL4.GL_FRONT_AND_BACK, GL4.GL_LINE);
+		
 		float bkg[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		FloatBuffer bkgBuffer = Buffers.newDirectFloatBuffer(bkg);
 		gl.glClearBufferfv(GL4.GL_COLOR, 0, bkgBuffer);
@@ -126,17 +128,17 @@ public class Code extends JFrame implements GLEventListener {
 	}
 	
 	private Matrix3D perspective(float fovy, float aspect, float n, float f) {
-		float q = 1.0f / ((float) Math.tan(Math.toRadians(0.5f * fovy)));
-		float A = q / aspect;
-		float B = (n + f) / (n - f);
-		float C = (2.0f * n * f) / (n - f);
+		float A = 1.0f / (float) (Math.tan(Math.toRadians(fovy/2)*aspect));
+		float B = 1.0f / (float) Math.tan(Math.toRadians(fovy/2));
+		float C = (-(f + n)) / (f - n);
+		float D = (-2.0f * f * n) / (f - n);
 		
 		Matrix3D r = new Matrix3D();
 		r.setElementAt(0, 0, A);
-		r.setElementAt(1, 1, q);
-		r.setElementAt(2, 2, B);
+		r.setElementAt(1, 1, B);
+		r.setElementAt(2, 2, C);
 		r.setElementAt(3, 2, -1.0f);
-		r.setElementAt(2, 3, C);
+		r.setElementAt(2, 3, D);
 		r.setElementAt(3, 3, 0.0f);
 		
 		return r;
@@ -284,7 +286,7 @@ public class Code extends JFrame implements GLEventListener {
 		}		
 		
 		String[] program = new String[lines.size()];
-		
+
 		for(int i = 0; i < lines.size(); i++) {
 			program[i] = (String) lines.get(i) + "\n";
 		}
