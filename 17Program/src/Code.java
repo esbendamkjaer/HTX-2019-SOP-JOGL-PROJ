@@ -192,14 +192,15 @@ public class Code extends JFrame implements GLEventListener {
 	
 	private boolean checkOpenGLError() {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
-		boolean foundError = false;
 		GLU glu = new GLU();
-		int glErr = gl.glGetError();
-		while(glErr != GL4.GL_NO_ERROR) {
+		boolean foundError = false;
+		
+		int glErr;
+		while((glErr = gl.glGetError()) != GL4.GL_NO_ERROR) {
 			System.err.println("glError: " + glu.gluErrorString(glErr));
 			foundError = true;
-			glErr = gl.glGetError();
 		}
+		
 		return foundError;
 	}
 	
