@@ -43,7 +43,7 @@ public class Code extends JFrame implements GLEventListener {
 		
 		setVisible(true);
 		
-		FPSAnimator animtr = new FPSAnimator(myCanvas, 144);
+		FPSAnimator animtr = new FPSAnimator(myCanvas, 50);
 		animtr.start();
 	}
 
