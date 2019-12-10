@@ -48,6 +48,8 @@ public class Code extends JFrame implements GLEventListener {
 		gl.glClear(GL4.GL_DEPTH_BUFFER_BIT);
 		gl.glUseProgram(rendering_program);
 		
+		gl.glPolygonMode(GL4.GL_FRONT_AND_BACK, GL4.GL_LINE);
+		
 		Matrix3D vMat = new Matrix3D();
 		vMat.translate(-cameraX, -cameraY, -cameraZ);
 		
@@ -76,6 +78,7 @@ public class Code extends JFrame implements GLEventListener {
 		
 		mMat = new Matrix3D();
 		mMat.translate(pyrLocX, pyrLocY, pyrLocZ);
+		mMat.rotateY(-25.0);;
 		
 		mvMat = new Matrix3D();
 		mvMat.concatenate(vMat);
