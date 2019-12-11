@@ -65,15 +65,14 @@ public class Code extends JFrame implements GLEventListener {
 		mMat.translate(locX, locY, locZ);
 		mMat.rotateY(System.currentTimeMillis()/10);
 		
-		Matrix3D mvMat = new Matrix3D();
-		mvMat.concatenate(vMat);
-		mvMat.concatenate(mMat);
+		Matrix3D mvpMat = new Matrix3D();
+		mvpMat.concatenate(pMat);
+		mvpMat.concatenate(vMat);
+		mvpMat.concatenate(mMat);
 		
-		int mv_loc = gl.glGetUniformLocation(rendering_program, "mv_matrix");
-		int proj_loc = gl.glGetUniformLocation(rendering_program, "proj_matrix");
+		int mvp_loc = gl.glGetUniformLocation(rendering_program, "mvp_matrix");
 		
-		gl.glUniformMatrix4fv(proj_loc, 1, false, pMat.getFloatValues(), 0);
-		gl.glUniformMatrix4fv(mv_loc, 1, false, mvMat.getFloatValues(), 0);
+		gl.glUniformMatrix4fv(mvp_loc, 1, false, mvpMat.getFloatValues(), 0);
 		
 		gl.glBindBuffer(GL4.GL_ARRAY_BUFFER, vbo[0]);
 		gl.glVertexAttribPointer(0, 3, GL4.GL_FLOAT, false, 0, 0);
