@@ -28,11 +28,10 @@ public class Code extends JFrame implements GLEventListener {
 	private float locX, locY, locZ;
 	private Matrix3D pMat;
 	
-	private ImportedModel myObj = new ImportedModel("/Plane.obj");
+	private ImportedModel myObj = new ImportedModel("/Pyramid.obj");
 	
 	public Code() {
-		setTitle("Model loader");
-		setSize(1200, 1200);
+		setSize(800, 800);
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,13 +56,14 @@ public class Code extends JFrame implements GLEventListener {
 		float bkg[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		FloatBuffer bkgBuffer = Buffers.newDirectFloatBuffer(bkg);
 		gl.glClearBufferfv(GL4.GL_COLOR, 0, bkgBuffer);
+		gl.glEnable(GL4.GL_CULL_FACE);
 		
 		Matrix3D vMat = new Matrix3D();
 		vMat.translate(-cameraX, -cameraY, -cameraZ);
 		
 		Matrix3D mMat = new Matrix3D();
 		mMat.translate(locX, locY, locZ);
-		mMat.rotateY(System.currentTimeMillis()/10);
+		mMat.rotateY(-25);
 		
 		Matrix3D mvpMat = new Matrix3D();
 		mvpMat.concatenate(pMat);
@@ -80,6 +80,7 @@ public class Code extends JFrame implements GLEventListener {
 		
 		gl.glEnable(GL4.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL4.GL_LEQUAL);
+		gl.glFrontFace(GL4.GL_CW);
 		
 		int numVerts = myObj.getNumVertices();
 		
@@ -94,8 +95,8 @@ public class Code extends JFrame implements GLEventListener {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 		rendering_program = createShaderProgram();
 		setupVertices();
-		cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
-		locX = 0.0f; locY = 0.0f; locZ = 6.0f;
+		cameraX = 2.0f; cameraY = 0.0f; cameraZ = 8.0f;
+		locX = 0.0f; locY = 2.0f; locZ = 0.0f;
 		
 		float aspect = (float) myCanvas.getWidth() / (float) myCanvas.getHeight();
 		pMat = perspective(60.0f, aspect, 0.1f, 1000.0f);
