@@ -1,8 +1,6 @@
-import graphicslib3D.Vertex3D;
-
 public class ImportedModel {
 
-	private Vertex3D[] vertices;
+	private float[] vertices;
 	private int numVertices;
 	
 	public ImportedModel(String filename) {
@@ -12,13 +10,7 @@ public class ImportedModel {
 			modelImporter.parseOBJ(filename);
 			
 			numVertices = modelImporter.getNumVertices();
-			float[] verts = modelImporter.getVertices();
-			
-			vertices = new Vertex3D[numVertices];
-			for (int i = 0; i < vertices.length; i++) {
-				vertices[i] = new Vertex3D();
-				vertices[i].setLocation(verts[i*3], verts[i*3+1], verts[i*3+2]);
-			}
+			vertices = modelImporter.getVertices();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -26,8 +18,10 @@ public class ImportedModel {
 		
 	}
 	
-	public Vertex3D[] getVertices() {
+	public float[] getVertices() {
+		
 		return vertices;
+		
 	}
 	
 	public int getNumVertices() {
