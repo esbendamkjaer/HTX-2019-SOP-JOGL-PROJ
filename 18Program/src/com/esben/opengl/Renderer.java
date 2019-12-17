@@ -48,6 +48,7 @@ public class Renderer extends JFrame implements GLEventListener {
 		
 		setVisible(true);
 		
+		// Gentegn GLCanvas 50 gange i sekundet
 		FPSAnimator animtr = new FPSAnimator(glCanvas, 50);
 		animtr.start();
 	}
@@ -80,15 +81,12 @@ public class Renderer extends JFrame implements GLEventListener {
 	 */
 	private void initObjects() {
 		Pyramid pyramid = new Pyramid();
-		//pyramid.setY(2.0f);
-		pyramid.setZ(6);
-		pyramid.setY(0.3f);
-		pyramid.setX(2);
+		pyramid.setY(2.0f);
 		objects[0] = pyramid;
 		
 		Cube cube = new Cube();
 		cube.setY(-2);
-		//objects[1] = cube;
+		objects[1] = cube;
 	}
 	
 	/*
