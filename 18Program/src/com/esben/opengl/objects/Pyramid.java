@@ -3,13 +3,13 @@ package com.esben.opengl.objects;
 public class Pyramid extends Object3D {
 
 	public Pyramid() {
-		super(new Model("/Pyramid.obj"));
+		super(new Model("/Plane.obj"));
 	}
 
 	@Override
 	public void update() {
 		
-		setRotY(System.currentTimeMillis()%36000/10);
+		setRotY(System.currentTimeMillis()/10%360);
 		
 	}
 	
