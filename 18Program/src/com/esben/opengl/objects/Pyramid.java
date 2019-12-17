@@ -9,7 +9,7 @@ public class Pyramid extends Object3D {
 	@Override
 	public void update() {
 		
-		setRotY(System.currentTimeMillis()%36000/10);
+		setRotY(System.currentTimeMillis()/10%360);
 		
 	}
 	

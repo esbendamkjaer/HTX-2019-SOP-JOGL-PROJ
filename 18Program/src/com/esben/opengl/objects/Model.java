@@ -5,13 +5,10 @@ public class Model {
 	private int numVertices;
 	
 	public Model(String filename) {
-		ModelImporter modelImporter = new ModelImporter();
 		
 		try {
-			modelImporter.parseOBJ(filename);
-			
-			numVertices = modelImporter.getNumVertices();
-			vertices = modelImporter.getVertices();
+			vertices = ModelImporter.parseOBJ(filename);
+			numVertices = vertices.length / 3;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -19,12 +16,18 @@ public class Model {
 		
 	}
 	
+	/*
+	 * Returnerer vertex koordinater
+	 */
 	public float[] getVertices() {
 		
 		return vertices;
 		
 	}
 	
+	/*
+	 * Returnerer antallet af vertices.
+	 */
 	public int getNumVertices() {
 		return numVertices;
 	}

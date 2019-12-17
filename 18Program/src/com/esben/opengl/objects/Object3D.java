@@ -11,10 +11,6 @@ public class Object3D {
 	public Object3D(Model model) {
 		this.model = model;
 	}
-
-	public void init() {
-		
-	}
 	
 	public void update() {
 		
