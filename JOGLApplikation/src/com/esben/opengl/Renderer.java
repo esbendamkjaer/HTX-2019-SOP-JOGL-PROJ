@@ -77,7 +77,7 @@ public class Renderer extends JFrame implements GLEventListener {
 	}
 	
 	/*
-	 * Instantiere anvendte objekter
+	 * Instantierer anvendte objekter
 	 */
 	private void initObjects() {
 		Pyramid pyramid = new Pyramid();
@@ -90,7 +90,7 @@ public class Renderer extends JFrame implements GLEventListener {
 	}
 	
 	/*
-	 * Erklære og initialisere buffere
+	 * ErklÃ¦rer og initialiserer buffere
 	 */
 	private void initBuffers() {
 		
@@ -178,7 +178,7 @@ public class Renderer extends JFrame implements GLEventListener {
 	}
 	
 	/*
-	 * Kompilere og opsætter shader programmet
+	 * Kompilerer og opsÃ¦tter shader programmet
 	 */
 	private int createShaderProgram() {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
@@ -205,7 +205,7 @@ public class Renderer extends JFrame implements GLEventListener {
 	}
 	
 	/*
-	 * Indlæser kildekode fra shaderfil med givent filnavn
+	 * IndlÃ¦ser kildekode fra shaderfil med givent filnavn
 	 */
 	private String[] readShaderSource(String filename) {
 		
