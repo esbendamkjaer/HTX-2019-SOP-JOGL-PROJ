@@ -12,11 +12,9 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
-import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
 import graphicslib3D.Matrix3D;
-import graphicslib3D.Vertex3D;
 
 public class Code extends JFrame implements GLEventListener {
 	private static final long serialVersionUID = 3746059804968448472L;
