@@ -1,6 +1,9 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -84,7 +87,7 @@ public class Code extends JFrame implements GLEventListener {
 		gl.glEnable(GL4.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL4.GL_LEQUAL);
 		gl.glFrontFace(GL4.GL_CW);
-		gl.glDrawArraysInstanced(GL4.GL_TRIANGLES, 0, 36, 1000000);
+		gl.glDrawArraysInstanced(GL4.GL_TRIANGLES, 0, 36, 10000);
 	}
 
 	public static void main(String[] args) {
@@ -261,31 +264,31 @@ public class Code extends JFrame implements GLEventListener {
 		gl.glDeleteShader(fShader);
 		return vfprogram;
 	}
-	
+
 	private String[] readShaderSource(String filename) {
-		
-		Vector<String> lines = new Vector<String>();
-		
-		Scanner sc;
+
+		ArrayList<String> lines = new ArrayList<String>();
+
 		try {
-			sc = new Scanner(new File(filename));
+			BufferedReader br = new BufferedReader(new InputStreamReader(Code.class.getResourceAsStream(filename)));
+
+			String line;
+			while ((line = br.readLine()) != null) {
+				lines.add(line);
+			}
+
+			br.close();
+
 		} catch (IOException e) {
-			System.err.println("IOException reading file: " + e);
-			return null;
+			e.printStackTrace();
 		}
-		
-		while (sc.hasNext()) {
-			lines.addElement(sc.nextLine());
-		}
-		
-		sc.close();
-		
+
 		String[] program = new String[lines.size()];
-		
+
 		for(int i = 0; i < lines.size(); i++) {
-			program[i] = (String) lines.elementAt(i) + "\n";
+			program[i] = (String) lines.get(i) + "\n";
 		}
-		
+
 		return program;
 	}
 
