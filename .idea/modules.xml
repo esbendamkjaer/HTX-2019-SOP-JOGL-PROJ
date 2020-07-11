@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/01ColoredBackground/01ColoredBackground.iml" filepath="$PROJECT_DIR$/01ColoredBackground/01ColoredBackground.iml" />
+      <module fileurl="file://$PROJECT_DIR$/02PointDrawing/02PointDrawing.iml" filepath="$PROJECT_DIR$/02PointDrawing/02PointDrawing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/03PointDrawingFragmentShader/03PointDrawingFragmentShader.iml" filepath="$PROJECT_DIR$/03PointDrawingFragmentShader/03PointDrawingFragmentShader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04GLSLErrorCatching/04GLSLErrorCatching.iml" filepath="$PROJECT_DIR$/04GLSLErrorCatching/04GLSLErrorCatching.iml" />
+      <module fileurl="file://$PROJECT_DIR$/05GLSLFileLoading/05GLSLFileLoading.iml" filepath="$PROJECT_DIR$/05GLSLFileLoading/05GLSLFileLoading.iml" />
+      <module fileurl="file://$PROJECT_DIR$/06GLSLTriangle/06GLSLTriangle.iml" filepath="$PROJECT_DIR$/06GLSLTriangle/06GLSLTriangle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/07AnimationExample/07AnimationExample.iml" filepath="$PROJECT_DIR$/07AnimationExample/07AnimationExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/08Cube/08Cube.iml" filepath="$PROJECT_DIR$/08Cube/08Cube.iml" />
+      <module fileurl="file://$PROJECT_DIR$/09CubeColor/09CubeColor.iml" filepath="$PROJECT_DIR$/09CubeColor/09CubeColor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/10CubeAnimated/10CubeAnimated.iml" filepath="$PROJECT_DIR$/10CubeAnimated/10CubeAnimated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/11CubeCopies/11CubeCopies.iml" filepath="$PROJECT_DIR$/11CubeCopies/11CubeCopies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/12CubeInstanced/12CubeInstanced.iml" filepath="$PROJECT_DIR$/12CubeInstanced/12CubeInstanced.iml" />
+      <module fileurl="file://$PROJECT_DIR$/13MultipleModels/13MultipleModels.iml" filepath="$PROJECT_DIR$/13MultipleModels/13MultipleModels.iml" />
+      <module fileurl="file://$PROJECT_DIR$/14SimpleSolarSystem/14SimpleSolarSystem.iml" filepath="$PROJECT_DIR$/14SimpleSolarSystem/14SimpleSolarSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/15SimpleSolarSystemMouse/15SimpleSolarSystemMouse.iml" filepath="$PROJECT_DIR$/15SimpleSolarSystemMouse/15SimpleSolarSystemMouse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/16SimpleObjectLoader/16SimpleObjectLoader.iml" filepath="$PROJECT_DIR$/16SimpleObjectLoader/16SimpleObjectLoader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/17Program/17Program.iml" filepath="$PROJECT_DIR$/17Program/17Program.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JOGLApplikation/JOGLApplikation.iml" filepath="$PROJECT_DIR$/JOGLApplikation/JOGLApplikation.iml" />
+    </modules>
+  </component>
+</project>

@@ -183,8 +183,8 @@ public class Renderer extends JFrame implements GLEventListener {
 	private int createShaderProgram() {
 		GL4 gl = (GL4) GLContext.getCurrentGL();
 
-		String vshaderSource[] = readShaderSource("shaders/vert.shader");
-		String fshaderSource[] = readShaderSource("shaders/frag.shader");
+		String vshaderSource[] = readShaderSource("/shaders/vert.shader");
+		String fshaderSource[] = readShaderSource("/shaders/frag.shader");
 		
 		int vShader = gl.glCreateShader(GL4.GL_VERTEX_SHADER);
 		gl.glShaderSource(vShader, vshaderSource.length, vshaderSource, null);
