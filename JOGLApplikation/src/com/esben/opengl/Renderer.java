@@ -1,12 +1,4 @@
 package com.esben.opengl;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
-
 import com.esben.opengl.objects.Cube;
 import com.esben.opengl.objects.Object3D;
 import com.esben.opengl.objects.Pyramid;
@@ -17,8 +9,14 @@ import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
-
 import graphicslib3D.Matrix3D;
+
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
 
 public class Renderer extends JFrame implements GLEventListener {
 	private static final long serialVersionUID = 3746059804968448472L;
@@ -59,7 +57,7 @@ public class Renderer extends JFrame implements GLEventListener {
 		renderingProgram = createShaderProgram();
 		gl.glUseProgram(renderingProgram);
 		
-		gl.glPolygonMode(GL4.GL_FRONT_AND_BACK, GL4.GL_LINE);
+		gl.glPolygonMode(GL4.GL_FRONT_AND_BACK, GL4.GL_FILL);
 
 		gl.glEnable(GL4.GL_CULL_FACE);
 		gl.glFrontFace(GL4.GL_CW);
